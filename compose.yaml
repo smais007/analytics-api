@@ -1,0 +1,12 @@
+services:
+  app:
+    image: analytics-api:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - PORT=8002
+    env_file:
+      - .env
+    ports:
+      - "8002:8002"
