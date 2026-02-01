@@ -1,10 +1,22 @@
 from typing import Union
-
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from api.events import router as events_router
+from api.db.session import init_db
 
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Initialize resources here
+    init_db()
+    yield
+    # Clean up resources here
+
+app = FastAPI(lifespan=lifespan)
 app.include_router(events_router, prefix="/api/events")
+
+# @app.on_event("startup")
+# def on_startup():
+#     print("Initializing for Database")
 
 @app.get("/")
 def read_root():

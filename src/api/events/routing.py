@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from .schema import EventSchema
+from .model import EventModel
 
 
 from api.db.config import DATABASE_URL 
@@ -14,6 +14,3 @@ def read_events():
     }
 
 
-@router.get("/{event_id}")
-def read_event(event_id:int) -> EventSchema:
-    return EventSchema(id= event_id)
